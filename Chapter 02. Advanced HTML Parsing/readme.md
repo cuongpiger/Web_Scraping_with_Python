@@ -111,7 +111,9 @@ find(<tag>, <attributes>, <recursive>, <text>, <keywords>)
 * Xem xét trang web [http://www.pythonscraping.com/pages/page3.html](http://www.pythonscraping.com/pages/page3.html)
   ![](images/02_06.png)
 * Dưới đây là cấu trúc cây HTML của web trên:
+  
   ![](images/02_07.png)
+  
 * Trong đây, thẻ **tr** là con của thẻ **table** và **tr**, **th**, **td**, **img** và **span** đều là cháu của thẻ **table**. Tức **tất cả con** đều là **cháu** nhưng chưa chắc **cháu** là **con**.
   
 * Code này lấy tất cả thẻ con:
