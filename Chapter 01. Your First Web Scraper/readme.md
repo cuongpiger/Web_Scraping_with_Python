@@ -83,3 +83,36 @@ else:
 print("Dòng này luôn chạy dù except block xảy ra")
 ```
 ![](images/01_06.png)
+
+<hr>
+
+* Khi crawl dữ liệu, ta sẽ ko thể biết dc trang web đó chứa các HTML element nào để mà ta có thể truy xuất, trong tình huống như vậy, để đảm bảo code ko bị crash, ta thực hiện như sau:
+
+###### [demo_01.04.py](demo_01.04.py)
+```python
+from urllib.request import urlopen
+from urllib.error import HTTPError
+from bs4 import BeautifulSoup
+
+def getTitle(url: str) -> str:
+    try:
+        html = urlopen(url)
+    except HTTPError as err:
+        return None
+    
+    try:
+        bs = BeautifulSoup(html.read(), 'html5lib')
+        title = bs.body.h1
+        
+    except AttributeError as err:
+        return None
+    
+    return title
+
+title = getTitle('http://www.pythonscraping.com/pages/page1.html')
+if title == None:
+    print('Không có title')
+else:
+    print(title)
+```
+![](images/01_07.png)
