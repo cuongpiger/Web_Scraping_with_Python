@@ -219,7 +219,7 @@ print(bs.find('img', {'src':'../img/gifts/img1.jpg'}).parent.previous_sibling.ge
 |**`[^]`**|Khớp với kí tự, biểu thức nào sao cho kí tự hoặc biểu thức này **không nằm** trong cặp ngoặc vuông|`[^A-Z]*`|apple, lowercase, qwerty|
 |**`|`**|Khớp với kí tự, biểu thức nào sao cho các kí tự và biểu thức này phân tách nhau bởi dấu **`|`** sao cho **chỉ một** kí tự hoặc một biểu thức xuất hiện.|`b(a|i|e)d`|bad, bid, bed|
 |**`^`**|Khớp với kí tự, biểu thức **đứng sau** sao cho kí tự hoặc biểu thức này **phải xuất hiện ở đầu chuổi**.|`^a`|apple, asdf, a|
-|**`\`**|Giống trong lập trình Java, bạn không thể print ra dấu **`"`** với dòng code sau: `System.out.print(""")`, sẽ bị lỗi, để print dấu **`"`**, thì sài dòng code này `System.out.print("\"")`, thì kí tự này dùng để làm điều này.|`\.\|\\`|<p>.|\</p>|
+|**`\`**|Giống trong lập trình Java, bạn không thể print ra dấu **`"`** với dòng code sau: `System.out.print(""")`, sẽ bị lỗi, để print dấu **`"`**, thì sài dòng code này `System.out.print("\"")`, thì kí tự này dùng để làm điều này.|`\.\|`|.||
 |**`.`**|Khớp với bất kì kí tự đơn nào (bao gồm kí hiệu đặc biệt, số, dấu cách,...).|`b.d`|bad, bzd, b$d, b d|
 |**`$`**|Đặt cuối chuổi sao cho khớp với kí tự, biểu thức đứng trước nó sao cho kí tự hoặc biểu thức này phải xuất hiện cuối chuổi. Kí tự này tương đường với **`.*`** khi được đặt cuối chuổi.|`[A-Z]*[a-z]*$`|ABCabc, zzzyx, Bob|
 |**`(?!<kí tự, biểu thức>)`**|Không chứa kí tự hoặc biểu thức phía sau nó trong chuổi lớn hơn, chung này sài nhiều hiểu chứ ko biết giải thích|`^((?![A-Z]).)*$`|no-caps-here, $ymb0ls a4e f!ne|
