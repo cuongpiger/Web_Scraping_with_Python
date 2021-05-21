@@ -43,3 +43,43 @@ print(bs.body.h1)
 print(bs.html.h1)
 ```
 ![](images/01_03.png)
+
+* Ngoài option là `html.parser`, còn có option cải tiến hơn là `lxml` (nhớ install bằng lệnh `pip3 install lxml`) - phiên bản này cải tiến hơn `html.parser` là có thể bắt các thẻ HTMl bị lỗi, đóng mở không đúng cách, thiếu thẻ `<head>`, `<body>` và nhanh hơn. Một phiên bản cải tiến siêu cấp vũ trụ là `html5lib` (nhớ install bằng `pip3 install html5lib`) bắt lỗi tốt nhất đồng thời cũng chậm nhất.
+
+## 2.3. Connecting Reliably and Handling Exceptions
+* Đôi khi trong quá trình crawl data sẽ gặp các lỗi ngoại lệ do website bạn crawl được cài đặt đặc biệt hay vì lí do xàm xí nào đó, lúc này quá trình crawl sẽ bị ngắt, nhưng ta vẫn muốn tiếp tục nếu gặp lỗi thì sẽ ignore nó, dưới đây là vài đoạn code demo.
+
+###### [demo_01.02.py](demo_01.02.py)
+```python
+from urllib.request import urlopen
+from urllib.error import HTTPError
+
+try:
+    html = urlopen("http://www.pythonscraping.com/pages/page1.html")
+except HTTPError as err:
+    print(err)
+else:
+    print("Else block này sẽ chạy nếu except block ko xảy ra")
+
+print("Sẽ luôn print dòng này dù except block hay else block xảy ra")
+```
+![](images/01_05.png)
+
+###### [demo_01.03.py](demo_01.03.py)
+```python
+from urllib.request import urlopen
+from urllib.error import HTTPError
+from urllib.error import URLError
+
+try:
+    html = urlopen('https://pythonscrapingthisurldoesnotexist.com')
+except HTTPError as err:
+    print(err)
+except URLError as err:
+    print('The server could not be found!')
+else:
+    print('It Worked!')
+    
+print("Dòng này luôn chạy dù except block xảy ra")
+```
+![](images/01_06.png)
