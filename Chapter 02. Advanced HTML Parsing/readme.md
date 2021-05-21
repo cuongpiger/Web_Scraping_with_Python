@@ -113,7 +113,7 @@ find(<tag>, <attributes>, <recursive>, <text>, <keywords>)
 * Dưới đây là cấu trúc cây HTML của web trên:
   
   ![](images/02_07.png)
-  
+
 * Trong đây, thẻ **tr** là con của thẻ **table** và **tr**, **th**, **td**, **img** và **span** đều là cháu của thẻ **table**. Tức **tất cả con** đều là **cháu** nhưng chưa chắc **cháu** là **con**.
   
 * Code này lấy tất cả thẻ con:
@@ -230,3 +230,60 @@ print(bs.find('img', {'src':'../img/gifts/img1.jpg'}).parent.previous_sibling.ge
   `[A-Za-z0-9\._+]+@[A-za-z]+\.(com|org|edu|net)`
 
 # 4. Regular Expressions and BeautifulSoup
+* Quay lại với trang web [http://www.pythonscraping.com/pages/page3.html](http://www.pythonscraping.com/pages/page3.html)
+![](images/02_06.png)
+* Nếu chúng ta muốn lấy tất cả các URL của tất cả các hình ảnh bằng dòng lệnh:
+  ```python
+  .find_all('img')
+  ```
+  tuy nhiên không phải hình ảnh nào cũng dùng được, có một số website họ dòng các hình ảnh trắng để căn chỉnh khoảng cách giữa các thành phần trang web và đương nhiên ta không muốn lấy các URL của các hình ảnh này, cái chúng ta cần là hình ảnh sản phẩm, lúc này ta cần có format dùng để lưu các hình ảnh, lúc này ta cần sử dụng regex.
+* Đoạn code này dùng để lấy tất cả các URL hình ảnh sản phẩm:
+###### [demo_02.11.py](demo_02.11.py)
+```python
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import re
+
+html = urlopen('http://www.pythonscraping.com/pages/page3.html')
+bs = BeautifulSoup(html, 'html.parser')
+images = bs.find_all('img', {'src':re.compile('\.\.\/img\/gifts/img.*\.jpg')})
+
+for image in images:
+    print(image['src'])
+```
+![](images/02_14.png)
+
+# 5. Accessing Attributes
+* Đôi khi một HTML element sẽ chứa nhiều thuộc tính, ví dụ thẻ **`<p></p>`** có các thuộc tính là **margin**, **style**, **align**,...
+* Đoạn code dưới đây dùng để truy cập vào các thuộc tính của thẻ **`<img/>`**:
+###### [demo_02.12.py](demo_02.12.py)
+```python
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import re
+
+html = urlopen('http://www.pythonscraping.com/pages/page3.html')
+bs = BeautifulSoup(html, 'html.parser')
+image = bs.find('img', {'src':re.compile('\.\.\/img\/gifts/img.*\.jpg')})
+
+for att in image.attrs:
+    print("{} = {}".format(att, image[att]))
+```
+![](images/02_15.png)
+
+# 6. Lambda Expressions
+* Đoạn code dưới đây tìm tất cả các thẻ HTML mà có 2 thuộc tính kèm theo:
+###### [demo_02.13.py](demo_02.13.py)
+```python
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import re
+
+html = urlopen('http://www.pythonscraping.com/pages/page3.html')
+bs = BeautifulSoup(html, 'html.parser')
+tags = bs.find_all(lambda tag: len(tag.attrs) == 2)
+
+for tag in tags:
+    print("=>> {}".format(tag))
+```
+![](images/02_16.png)
