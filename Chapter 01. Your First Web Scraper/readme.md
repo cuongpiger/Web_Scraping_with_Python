@@ -26,6 +26,7 @@ print(html.read())
   bs = BeautifulSoup(html, 'html.parser')
   ```
   từ đây có thể truy cập vào các HTML element bằng các cách dưới đây:
+  
   ![](images/01_04.png)
 * Dưới đây là toàn bộ mã nguồn:
 ###### [demo_01.01.py](demo_01.01.py)
