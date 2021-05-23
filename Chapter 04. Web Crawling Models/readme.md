@@ -132,3 +132,6 @@ crawler.parse(websites[2], 'https://www.brookings.edu/blog/techtank/2016/03/01/i
 crawler.parse(websites[3], 'https://www.nytimes.com/2018/01/28/business/energy-environment/oil-boom.html')
 ```
 ![](images/04_03.png)
+
+# 3. Structuring Crawlers
+## 3.1. Crawling Sites Through Search
