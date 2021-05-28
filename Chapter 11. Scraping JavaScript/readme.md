@@ -7,7 +7,7 @@
 * Dưới đây ta sẽ tiến hành crawl data từ trang web trên bằng cách sử dụng Selenium.
 
 ###### [demo_11.00.py](demo_11.00.py)
-```
+```python
 from selenium import webdriver
 import time
 
