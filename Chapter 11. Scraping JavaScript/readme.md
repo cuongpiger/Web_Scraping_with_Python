@@ -67,3 +67,62 @@ finally:
 * Ngoài `By.ID`, còn có: `CLASS_NAME`, `CSS_SELECTOR`, `LINK_TEXT`, `PARTIAL_LINK_TEXT`, `NAME`, `TAG_NAME`, `XPATH`,...
 
 ## 2.2. Additional Selenium Webdrivers
+# 3. Handling Redirects
+* Làm việc trên trang web này: [http://pythonscraping.com/pages/javascript/redirectDemo1.html](http://pythonscraping.com/pages/javascript/redirectDemo1.html)
+* Có một cách thông minh để biết trang chuyển hướng là hãy để cho Selenium liên tục gọi một element DOM nào đó trên trang, cho đến khi Selenium thông báo lỗi `StaleElementReferenceException` tức lúc này trang đã dc chuyển hướng.
+
+###### [demo_11.02.py](demo_11.02.py)
+```python
+from selenium import webdriver
+import time
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.common.exceptions import StaleElementReferenceException
+
+def waitForLoad(driver):
+    element = driver.find_element_by_tag_name('html')
+    cnt = 0
+    
+    while True:
+        cnt += 1
+        
+        if cnt > 20:
+            print(f"=>> Hết thời gian sau 10s và quay trở lại.")
+            return
+        
+        time.sleep(.5)
+        try:
+            element == driver.find_element_by_tag_name('html')
+        except StaleElementReferenceException:
+            return
+        
+driver = webdriver.PhantomJS()
+driver.get("http://pythonscraping.com/pages/javascript/redirectDemo1.html")
+waitForLoad(driver)
+print(driver.page_source)
+```
+![](images/11.02.png)
+
+* Đoạn mã trên sẽ kiểm tra trang nửa giây một lần, với thời gian chờ là 10 giây.
+
+<hr>
+
+* Ngoài cách phía trên có thể sử dụng `WebDriverWait` của Selenium.
+###### [demo_11.03.py](demo_11.03.py)
+```python
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+from selenium import webdriver
+
+driver = webdriver.PhantomJS()
+driver.get("http://pythonscraping.com/pages/javascript/redirectDemo1.html")
+
+try:
+    body_elem = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, '//body[contains(text(), "This is the page you are looking for!")]')))
+
+    print(body_elem.text)
+except TimeoutException:
+    print("Ko tìm thấy element body này!")
+```
+![](images/11.03.png)
